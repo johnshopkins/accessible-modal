@@ -77,10 +77,11 @@ AccessibleModal.prototype.getFocusable = function (el) {
 
   return el.find(this.focusable.join(",")).filter(":visible").filter(function () {
 
-    var tabindex = $(this).attr("tabindex");
+    // :visible does not remove elements with visibilty:hidden CSS attribute
+    if ($(this).css('visibility') === 'hidden') return false;
 
     // no tabindex, include this element
-    if (typeof tabindex === "undefined") return true;
+    if (typeof $(this).attr("tabindex") === "undefined") return true;
 
     // exclude items with a negative tabindex
     return $(this).attr("tabindex") > -1;
