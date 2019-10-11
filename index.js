@@ -94,29 +94,38 @@ AccessibleModal.prototype.getFocusable = function (el) {
  */
 AccessibleModal.prototype.trapTab = function (el, e) {
 
-  e.preventDefault();
+  // e.preventDefault();
 
   var focusable = this.getFocusable(el);        // array of focusable elements
   var focused = focusable.filter(":focus");     // currently focused item
   var focusedIndex = focusable.index(focused);  // index of currently focused element
 
-  var newIndex;
+  var nextIndex;          // element that is next up
+  var newIndex = false;  // manually set the index
 
   if (focusedIndex > -1) {
 
-    newIndex = e.shiftKey ? focusedIndex - 1 : focusedIndex + 1;
+    nextIndex = e.shiftKey ? focusedIndex - 1 : focusedIndex + 1;
 
-    if (newIndex > focusable.length - 1) {
+    if (nextIndex > focusable.length - 1) {
       newIndex = 0;
-    } else if (newIndex === -1) {
+    } else if (nextIndex === -1) {
       newIndex = focusable.length - 1;
     }
 
-  } else {
-    newIndex = 0;
-  }
+    /**
+     * Only manually set the next focused item if it's either
+     * the first or last item (restart the circular tab focus).
+     * If you e.preventDefault() EVERY time, a bug pops up
+     * in Chrome that causes links to stop showing the focus
+     * ring if the mouse is ever used.
+     */
+    if (newIndex !== false) {
+      focusable.get(newIndex).focus();
+      e.preventDefault();
+    }
 
-  focusable.get(newIndex).focus();
+  }
 
 };
 
