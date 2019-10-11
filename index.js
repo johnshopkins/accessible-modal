@@ -7,24 +7,21 @@ var $ = require("./shims/jquery");
  * @param  {array} focusable An array of selectors of focusable objects in the modal
  * @return null
  */
-var AccessibleModal = function (focusable) {
+var AccessibleModal = function () {
 
-  if (typeof focusable !== "undefined") {
-    this.focusable = focusable;
-  } else {
-    this.focusable = [
-      "a[href]",
-      "input:not([disabled])",
-      "select:not([disabled])",
-      "textarea:not([disabled])",
-      "button:not([disabled])",
-      "iframe",
-      "object",
-      "embed",
-      "*[tabindex]",
-      "*[contenteditable]"
-    ];
-  }
+  this.focusable = [
+    "a[href]",
+    "input:not([disabled])",
+    "select:not([disabled])",
+    "textarea:not([disabled])",
+    "button:not([disabled])",
+    "iframe",
+    "object",
+    "embed",
+    "*[tabindex]",
+    "*[contenteditable]",
+    "[tabindex]:not([tabindex='-1'])"
+  ];
 
 };
 
