@@ -1,7 +1,5 @@
 /* global module: false */
 
-var $ = require("./shims/jquery");
-
 /**
  * Initialize an accessible modal
  * @param  {array} focusable An array of selectors of focusable objects in the modal
